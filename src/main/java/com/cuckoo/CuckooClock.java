@@ -1,6 +1,5 @@
 package com.cuckoo;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,18 +13,15 @@ public class CuckooClock {
 
     private static final String TIME_REGEX = "^([01]\\d|2[0-3]):[0-5]\\d$";
 
-
     public String tick(String tiempo){
 
         validacion(tiempo);
 
         int[] zona = parse(tiempo);
-        int   hora   = zona[0];
-        int   minuto = zona[1];
+        int hora = zona[0];
+        int minuto = zona[1];
 
-        return Optional.of(minuto)
-                .map(m -> sonidoReloj(hora, m))
-                .orElse(TICK);
+        return sonidoReloj(hora, minuto);
     }
 
     private String sonidoReloj(int hora, Integer minuto) {
@@ -60,14 +56,4 @@ public class CuckooClock {
         String[] separar = tiempo.split(":");
         return new int[]{ Integer.parseInt(separar[0]), Integer.parseInt(separar[1]) };
     }
-
-
-    //Prueba
-    public static void main(String[] args) {
-        CuckooClock clock = new CuckooClock();
-        System.out.println(clock.tick("13:00"));
-        System.out.println(clock.tick("08:15"));
-        System.out.println(clock.tick("14:07"));
-    }
-
 }
